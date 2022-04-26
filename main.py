@@ -5,11 +5,15 @@ import random
 # initialize our turtle related objects
 tim = Turtle()
 tim.shape('turtle')
+tim.speed('slow')
 # set penup so turtle doesn't draw lines between dots
 tim.penup()
 # for updating our turtle's position
 y_position = 0
 x_position = 0
+# set number of dots and rows
+NUM_DOTS = 10
+NUM_ROWS = 10
 
 # initialize our screen objects
 screen = Screen()
@@ -37,13 +41,26 @@ extracted_colors = extract_color('fruit_salad.png', 30)
 
 # MAIN LOOP ###
 
+# put our turtle somewhere in the middle to start
+tim.setheading(225)
+tim.forward(300)
+tim.setheading(0)
+x_position = tim.xcor()
+y_position = tim.ycor()
+
 # draw 10x10 matrix of random colored dots
-for each_row in range(10):
-    for each_dot in range(10):
+for each_row in range(NUM_ROWS):
+    for dots in range(NUM_DOTS):
         tim.dot(20, random.choice(extracted_colors))
         tim.forward(50)
+        # at the end of each row move turtle up and back to the left
+        if dots == 9:
+            tim.setheading(90)
+            tim.forward(50)
+            tim.setheading(180)
+            tim.forward(500)
+            tim.setheading(0)
     y_position += 50
-    x_position = 0
     # move turtle to the beginning of next row
     tim.sety(y_position)
     tim.setx(x_position)
